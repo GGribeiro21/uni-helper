@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.UniHelper">
+        android:theme="@style/Theme.UniHelper"
+        android:enableOnBackInvokedCallback="true">
         <!-- Parent activity serve para mostrar seta de voltar no optionsMenu -->
         <activity
             android:name=".Activities.CadastroActivity"
