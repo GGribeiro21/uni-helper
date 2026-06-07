@@ -38,7 +38,6 @@ public class CadastroActivity extends AppCompatActivity {
             return insets;
         });
         inicializarComponentes();
-
     }
     private void inicializarComponentes(){
         editNome = findViewById(R.id.edit_nome_cadastro);
