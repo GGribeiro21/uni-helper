@@ -16,11 +16,13 @@ public class FormularioCadastro {
     }
     public Boolean formularioValido(){
         boolean valido = false;
-        for (int i = 0; i < campos.size(); i++)
+        int camposVazios = 0;
+        for (int i = 0; i < campos.size(); i++) {
             valido = verificarSeEstaVazio(campos.get(i));
+            if(!valido) camposVazios++;
+        }
         List<Boolean> camposValidos = List.of(validarSenha());
-        valido = senhasBatem();
-        return valido;
+        return (senhasBatem() && camposVazios == 0);
     }
     private Boolean validarSenha(){
         boolean valido = false;
@@ -31,7 +33,11 @@ public class FormularioCadastro {
         return valido;
     }
     private boolean senhasBatem(){
-        if(editSenha.getText().toString().equals(editConfirmarSenha.getText().toString())) return true;
+        String senha = editSenha.getText().toString();
+        String confirmarSenha = editConfirmarSenha.getText().toString();
+        if(senha.isBlank() || confirmarSenha.isBlank())
+            return false;
+        if(senha.toString().equals(confirmarSenha.toString())) return true;
         else {
             editConfirmarSenha.setError("A senha deve ser igual nos dois campos");
             return false;
