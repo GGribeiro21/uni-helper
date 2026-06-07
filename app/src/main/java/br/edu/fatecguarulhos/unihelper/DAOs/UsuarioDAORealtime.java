@@ -14,11 +14,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import br.edu.fatecguarulhos.unihelper.Models.Usuario;
 
-public class UsuarioDAOv2 {
+public class UsuarioDAORealtime {
 
     private FirebaseDatabase database;
     private DatabaseReference ref;
-    public UsuarioDAOv2(){
+    public UsuarioDAORealtime(){
         DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
         connectedRef.addValueEventListener(new ValueEventListener() {
             @Override

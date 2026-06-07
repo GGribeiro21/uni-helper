@@ -3,23 +3,16 @@ package br.edu.fatecguarulhos.unihelper.Activities;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import br.edu.fatecguarulhos.unihelper.DAOs.UsuarioDAO;
-import br.edu.fatecguarulhos.unihelper.DAOs.UsuarioDAOv2;
+import br.edu.fatecguarulhos.unihelper.DAOs.UsuarioDAORealtime;
 import br.edu.fatecguarulhos.unihelper.Formularios.FormularioCadastro;
 import br.edu.fatecguarulhos.unihelper.Models.Usuario;
 import br.edu.fatecguarulhos.unihelper.R;
@@ -27,7 +20,7 @@ import br.edu.fatecguarulhos.unihelper.R;
 public class CadastroActivity extends AppCompatActivity {
     private EditText editNome, editEmail, editSenha, editConfirmarSenha;
     private FirebaseAuth auth;
-    private UsuarioDAOv2 usuarioDAO;
+    private UsuarioDAORealtime usuarioDAO;
     private FormularioCadastro formulario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +45,7 @@ public class CadastroActivity extends AppCompatActivity {
     public void cadastrarUsuario(View view){
         if(formulario.formularioValido()) {
             try{
-                usuarioDAO = new UsuarioDAOv2();
+                usuarioDAO = new UsuarioDAORealtime();
                 Usuario u = criarUsuario();
                 usuarioDAO.registrarUsuario(u);
             } catch (Exception e){
