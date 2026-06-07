@@ -3,6 +3,8 @@ package br.edu.fatecguarulhos.unihelper.Formularios;
 import android.widget.EditText;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FormularioCadastro {
     private EditText editNome, editEmail, editSenha, editConfirmarSenha;
@@ -22,8 +24,21 @@ public class FormularioCadastro {
             if(!valido) camposVazios++;
         }
         List<Boolean> camposValidos = List.of(validarSenha());
+        if(validarEmail())
+            System.out.println("EmaiValido");
         return (senhasBatem() && camposVazios == 0);
     }
+    private Boolean validarEmail(){
+        String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+        String email = editEmail.getText().toString();
+        if (email.isBlank()) {
+                return false;
+            }
+        Matcher matcher = EMAIL_PATTERN.matcher(email);
+        return matcher.matches();
+    }
+
     private Boolean validarSenha(){
         boolean valido = false;
         String senha = editSenha.getText().toString();
@@ -32,7 +47,7 @@ public class FormularioCadastro {
         else valido = true;
         return valido;
     }
-    private boolean senhasBatem(){
+    private Boolean senhasBatem(){
         String senha = editSenha.getText().toString();
         String confirmarSenha = editConfirmarSenha.getText().toString();
         if(senha.isBlank() || confirmarSenha.isBlank())
