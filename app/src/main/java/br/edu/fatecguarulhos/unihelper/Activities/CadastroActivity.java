@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import br.edu.fatecguarulhos.unihelper.DAOs.UsuarioDAO;
+import br.edu.fatecguarulhos.unihelper.DAOs.UsuarioDAOv2;
 import br.edu.fatecguarulhos.unihelper.Formularios.FormularioCadastro;
 import br.edu.fatecguarulhos.unihelper.Models.Usuario;
 import br.edu.fatecguarulhos.unihelper.R;
@@ -26,7 +27,7 @@ import br.edu.fatecguarulhos.unihelper.R;
 public class CadastroActivity extends AppCompatActivity {
     private EditText editNome, editEmail, editSenha, editConfirmarSenha;
     private FirebaseAuth auth;
-    private UsuarioDAO usuarioDAO;
+    private UsuarioDAOv2 usuarioDAO;
     private FormularioCadastro formulario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +52,9 @@ public class CadastroActivity extends AppCompatActivity {
     public void cadastrarUsuario(View view){
         if(formulario.formularioValido()) {
             try{
-                usuarioDAO = new UsuarioDAO(this);
+                usuarioDAO = new UsuarioDAOv2();
                 Usuario u = criarUsuario();
-                //usuarioDAO.cadastrarUsuario(u);
+                usuarioDAO.registrarUsuario(u);
             } catch (Exception e){
                 System.out.println(e.getStackTrace());
             }
