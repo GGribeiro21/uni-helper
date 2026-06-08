@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import br.edu.fatecguarulhos.unihelper.R;
 public class PerfilActivity extends AppCompatActivity {
 
     private Intent it;
+    private TextView textNomePerfil;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,8 +31,11 @@ public class PerfilActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        inicializarComponentes();
     }
-
+    private void inicializarComponentes(){
+        textNomePerfil = findViewById(R.id.text_nome_perfil);
+    }
     public void voltar(View view){
         finish();
     }
