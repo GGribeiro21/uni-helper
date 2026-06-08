@@ -1,11 +1,14 @@
 package br.edu.fatecguarulhos.unihelper.DAOs;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
@@ -24,16 +27,21 @@ public class MateriaDAO {
         this.context = context;
     }
 
-    public void cadastrarMateria(Materia materia){
-        registrarMateriaFirebaseAuth(materia);
-        salvarMateriaFirestore(materia);
+    public void addMateria(Materia materia){
+     materiaColletion.add(materia)
+             .addOnSuccessListener(documentReference ->{
+                 String idGerado = documentReference.getId();
+                 Toast.makeText(context, "Matéria cadastrada", Toast.LENGTH_SHORT).show();
+             })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(context, "Erro: "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
 
-    private void registrarMateriaFirebaseAuth(Materia materia){
+    public void alterarMateria(Materia materia){
+        materiaColletion.document(materia.getId()).set(materia);
     }
-    private void salvarMateriaFirestore(Materia materia){
-        materiaColletion.add(materia)
-                .addOnSuccessListener(documentReference -> {
-                }).addOnFailureListener( e ->{});
+    public void deletarMateria(String idMateria){
+        materiaColletion.document(idMateria).delete();
     }
 }
