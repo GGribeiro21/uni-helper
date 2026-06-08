@@ -11,13 +11,13 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import br.edu.fatecguarulhos.unihelper.R;
 
 public class PerfilActivity extends AppCompatActivity {
 
     private Intent it;
-    private Button btnLogout;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,17 +28,17 @@ public class PerfilActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        btnLogout = findViewById(R.id.btnLogout);
     }
 
     public void voltar(View view){
         finish();
     }
 
-    public void logout(View view){
-        it = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(it);
+    public void encerrarSessao(View view){
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
         finish();
     }
 

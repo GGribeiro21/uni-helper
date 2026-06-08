@@ -37,11 +37,15 @@
         <activity
             android:name=".Activities.CadastroMateriaActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:parentActivityName=".Activities.MainActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:label="Cadastro de Matéria"/>
         <activity
             android:name=".Activities.PerfilActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:parentActivityName=".Activities.MainActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:label="Perfil"/>
         <activity
             android:name=".Activities.ManutecaoMateria"
             android:exported="false"
