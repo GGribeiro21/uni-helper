@@ -46,7 +46,7 @@ public class CadastroMateriaActivity extends AppCompatActivity {
         edtData = findViewById(R.id.edtData);
         edtFormula = findViewById(R.id.edtFormula);
         formMateria = new FormularioMateria(edtMateria, edtQtdAvaliacoes, edtData, edtFormula);
-        materiaDAO = new MateriaDAO(this, FirebaseAuth.getInstance().getUid().toString());
+        materiaDAO = new MateriaDAO(this, FirebaseAuth.getInstance().getUid());
     }
     private void configurarComponentes(){
         edtData.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +58,7 @@ public class CadastroMateriaActivity extends AppCompatActivity {
     }
     public void salvarMateria(View view){
         if(formMateria.camposValidos())
-            materiaDAO.cadastrarMateria(criarMateria(), FirebaseAuth.getInstance().getUid());
+            materiaDAO.cadastrarMateria(criarMateria());
     }
     private Materia criarMateria(){
         Materia materia = new Materia();
