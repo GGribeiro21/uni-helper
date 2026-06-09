@@ -62,9 +62,10 @@ public class CadastroMateriaActivity extends AppCompatActivity {
     }
     private Materia criarMateria(){
         Materia materia = new Materia();
+        materia.generateId();
         materia.setNome(edtMateria.getText().toString());
         materia.setQtdAvaliacoes(Integer.valueOf(edtQtdAvaliacoes.getText().toString()));
-        materia.setData(formMateria.getDataMateria());
+        materia.setDataProva(edtData.getText().toString());
         materia.setFormulaMedia(edtFormula.getText().toString());
         return materia;
     }
