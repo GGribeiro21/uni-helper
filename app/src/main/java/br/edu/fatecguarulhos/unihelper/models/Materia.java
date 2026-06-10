@@ -1,11 +1,14 @@
 package br.edu.fatecguarulhos.unihelper.models;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class Materia {
 
     private String nome, formulaMedia, id, dataProva;
     private int qtdAvaliacoes;
+    private List<Integer> notas = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -39,4 +42,11 @@ public class Materia {
 
     public void setQtdAvaliacoes(int qtdAvaliacoes) { this.qtdAvaliacoes = qtdAvaliacoes; }
 
+    public List<Integer> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Integer> notas) {
+        this.notas = notas;
+    }
 }
