@@ -54,5 +54,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
 
     implementation("com.google.code.gson:gson:2.14.0")
+    implementation("net.objecthunter:exp4j:0.4.8")
 
 }
