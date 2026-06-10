@@ -2,12 +2,20 @@ package br.edu.fatecguarulhos.unihelper.formularios;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FormularioMateria {
 
@@ -20,6 +28,30 @@ public class FormularioMateria {
         this.edtNota = edtNota;
         this.edtData = edtData;
         this.edtFormula = edtFormula;
+        edtFormula.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                String original = edtFormula.getText().toString();
+                String upper = original.toUpperCase();
+
+                // Evita loop infinito ao alterar o texto
+                if (!original.equals(upper)) {
+                    edtFormula.setText(upper);
+                    edtFormula.setSelection(upper.length()); // Mantém o cursor no final
+                }
+            }
+        });
     }
 
     public boolean camposValidos(){
@@ -28,6 +60,8 @@ public class FormularioMateria {
         campoVazio = campoVazio(edtNota, campoVazio);
         campoVazio = campoVazio(edtData, campoVazio);
         campoVazio = campoVazio(edtFormula, campoVazio);
+        if(!validarFormula())
+            return false;
         return !campoVazio;
     }
     private boolean campoVazio(EditText campo, boolean campoVazio){
@@ -54,5 +88,83 @@ public class FormularioMateria {
             edtData.setText(sdf.format(calendario.getTime()));
 
         }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    public boolean validarFormula() {
+        boolean inputValido = formatoFormulaValido();
+        boolean atividadesValidas = todasAtividadesExistem(gerarListaAux());
+        return ( inputValido && atividadesValidas );
+    }
+    private boolean formatoFormulaValido(){
+        String inputFormula = edtFormula.getText().toString();
+        String formula = inputFormula.replaceAll("\\s+", "");
+
+
+        String regex = "^[0-9A\\(\\)\\+\\-\\*\\/]+$";
+        if (!formula.matches(regex)) {
+            return false;
+        }
+
+
+        if (formula.matches(".*A(?![0-9]).*")) {
+            return false;
+        }
+
+        if (formula.matches(".*\\d+A.*")) {
+            return false;
+        }
+
+
+        if (formula.matches(".*\\)([A\\d\\(]).*")) {
+            return false;
+        }
+
+        if (formula.matches(".*[A\\d]\\(.*")) {
+            return false;
+        }
+
+
+        int qtdParenteses = 0;
+        for (char c : formula.toCharArray()) {
+            if (c == '(') qtdParenteses++;
+            if (c == ')') qtdParenteses--;
+            if (qtdParenteses < 0) return false;
+        }
+
+        return qtdParenteses == 0;
+    }
+    public boolean todasAtividadesExistem(HashMap<String, Integer> notasMap) {
+        String inputFormula = edtFormula.getText().toString();
+
+
+        HashSet<String> atividadesBuscadas = new HashSet<>(notasMap.keySet());
+
+        Pattern pattern = Pattern.compile("A\\d+");
+        Matcher matcher = pattern.matcher(inputFormula);
+
+
+        while (matcher.find()) {
+            String atividade = matcher.group();
+
+
+            if (!notasMap.containsKey(atividade)) {
+                return false;
+            }
+
+
+            atividadesBuscadas.remove(atividade);
+        }
+
+
+        return atividadesBuscadas.isEmpty();
+    }
+
+
+    private HashMap<String, Integer> gerarListaAux(){
+        HashMap<String, Integer> listaAux = new HashMap<>();
+        int qtdMaterias = Integer.parseInt(edtNota.getText().toString());
+        for(int i = 0; i < qtdMaterias; i++)
+            listaAux.put("A"+(i+1), 1);
+        return listaAux;
     }
 }
