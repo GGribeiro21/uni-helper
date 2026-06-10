@@ -64,6 +64,8 @@ public class ManutecaoMateria extends AppCompatActivity {
         edtNotaAtividade = findViewById(R.id.edtNotaAtividade_manutencaoMateria);
         formMateria = new FormularioMateria(edtMateria, edtQtdAvaliacoes, edtData, edtFormula);
         materiaDAO = new MateriaDAO(this, FirebaseAuth.getInstance().getUid());
+        double notaFinal = materia.calcularNotaFinal();
+        System.out.println(String.format("Nota Final: %.2f", notaFinal));
     }
     private void configurarComponentes(){
         edtMateria.setText(materia.getNome());
