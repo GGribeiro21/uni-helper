@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Formula de Média da Matéria"
-            android:inputType="text" />
+            android:inputType="number" />
 
         <Space
             android:layout_width="match_parent"

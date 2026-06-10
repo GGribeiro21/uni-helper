@@ -1,5 +1,6 @@
 package br.edu.fatecguarulhos.unihelper.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,11 +12,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.gson.Gson;
+
 import br.edu.fatecguarulhos.unihelper.R;
+import br.edu.fatecguarulhos.unihelper.models.Materia;
 
 public class ManutecaoMateria extends AppCompatActivity {
 
     private EditText edtMateriaManu, edtNotaManu, edtDataManu, edtFormulaManu;
+    private Materia materia;
     private Button btnAlterar, btnDeletar;
 
     @Override
@@ -28,13 +33,25 @@ public class ManutecaoMateria extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
+        inicializarComponentes();
+        configurarComponentes();
+    }
+    private void inicializarComponentes(){
+        Intent it = getIntent();
+        materia = new Gson().fromJson(it.getStringExtra("jsonMateria"),Materia.class);
         edtMateriaManu = findViewById(R.id.edtMateriaManu);
         edtNotaManu = findViewById(R.id.edtNotaManu);
         edtDataManu = findViewById(R.id.edtDataManu);
         edtFormulaManu = findViewById(R.id.edtFormulaManu);
         btnDeletar = findViewById(R.id.btnDeletar);
         btnAlterar = findViewById(R.id.btnAlterar);
+    }
+    private void configurarComponentes(){
+        edtMateriaManu.setText(materia.getNome());
+        edtDataManu.setText(materia.getDataProva());
+        edtFormulaManu.setText(materia.getFormulaMedia());
+        edtNotaManu.setText(String.valueOf(materia.getQtdAvaliacoes()));
+
     }
 
     public void voltar(View view){
