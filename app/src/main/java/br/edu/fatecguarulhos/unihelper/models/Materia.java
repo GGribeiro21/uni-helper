@@ -49,4 +49,9 @@ public class Materia {
     public void setNotas(List<Integer> notas) {
         this.notas = notas;
     }
+    public int pegarNotaAtividade(int atividade){
+        if(notas.size() <= atividade)
+            return 0;
+        return notas.get(atividade);
+    }
 }
