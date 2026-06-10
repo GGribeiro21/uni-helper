@@ -48,7 +48,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Formula de Média da Matéria"
-            android:inputType="number" />
+            android:inputType="text"
+            android:digits="0123456789Aa+-*/() " />
 
         <Spinner
             android:id="@+id/spnrAtividades"
@@ -63,6 +64,12 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number|numberDecimal" />
+
+        <TextView
+            android:id="@+id/txtMedia_manutencaoMateria"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         <Space
             android:layout_width="match_parent"

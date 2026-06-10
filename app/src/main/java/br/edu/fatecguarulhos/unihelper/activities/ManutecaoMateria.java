@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import br.edu.fatecguarulhos.unihelper.models.Materia;
 public class ManutecaoMateria extends AppCompatActivity {
 
     private EditText edtMateria, edtQtdAvaliacoes, edtData, edtFormula, edtNotaAtividade;
+    private TextView txtMedia;
     private Spinner spnAtividades;
     private Materia materia;
     private HashMap<String, Double> notas;
@@ -62,6 +64,7 @@ public class ManutecaoMateria extends AppCompatActivity {
         btnAlterar = findViewById(R.id.btnAlterar);
         spnAtividades = findViewById(R.id.spnrAtividades);
         edtNotaAtividade = findViewById(R.id.edtNotaAtividade_manutencaoMateria);
+        txtMedia = findViewById(R.id.txtMedia_manutencaoMateria);
         formMateria = new FormularioMateria(edtMateria, edtQtdAvaliacoes, edtData, edtFormula);
         materiaDAO = new MateriaDAO(this, FirebaseAuth.getInstance().getUid());
     }
@@ -72,6 +75,7 @@ public class ManutecaoMateria extends AppCompatActivity {
         edtQtdAvaliacoes.setText(String.valueOf(materia.getQtdAvaliacoes()));
         definirOnTextChanged();
         inicializarSpinner();
+        atualizarMedia();
     }
     private void inicializarSpinner(){
         atualizarTamanhoSpinner(materia.getQtdAvaliacoes());
@@ -112,6 +116,10 @@ public class ManutecaoMateria extends AppCompatActivity {
         materia.setDataProva(edtData.getText().toString());
         materia.setFormulaMedia(edtFormula.getText().toString());
         materia.setNotas(notas);
+        atualizarMedia();
+    }
+    private void atualizarMedia(){
+        txtMedia.setText("Media final: "+ String.format("%.2f", materia.calcularNotaFinal()));
     }
     private void deletarNotasAtividadesEliminadas(int qtdAvaliacoes, Integer notaQtdAvaliacoes) {
         for(int i = notaQtdAvaliacoes; i < qtdAvaliacoes; i ++){
